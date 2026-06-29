@@ -3,7 +3,7 @@ FROM nousresearch/hermes-agent:latest
 # Tool versions (bump these ARGs to update)
 ARG GH_VERSION=2.63.0
 ARG BW_VERSION=2025.1.0
-ARG HIMALAYA_VERSION=1.9.0
+ARG HIMALAYA_VERSION=1.2.0
 
 USER root
 
@@ -24,9 +24,10 @@ RUN curl -fsSL "https://github.com/bitwarden/clients/releases/download/cli-v${BW
     && mv /tmp/bw/bw /usr/local/bin/ \
     && rm -rf /tmp/bw /tmp/bw.zip
 
-# Himalaya — static binary
-RUN curl -fsSL "https://github.com/pimalaya/himalaya/releases/download/v${HIMALAYA_VERSION}/himalaya-linux-amd64" \
-    -o /usr/local/bin/himalaya \
+# Himalaya — extract from .tgz archive
+RUN curl -fsSL "https://github.com/pimalaya/himalaya/releases/download/v${HIMALAYA_VERSION}/himalaya.x86_64-linux.tgz" \
+    | tar xz -C /tmp \
+    && mv /tmp/himalaya /usr/local/bin/ \
     && chmod +x /usr/local/bin/himalaya
 
 USER hermes
