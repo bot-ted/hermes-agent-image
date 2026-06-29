@@ -1,0 +1,60 @@
+name: Build and Push
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 1 * * *'  # 8 PM EST nightly
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to ghcr.io
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build image (for smoke test)
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          load: true
+          tags: ghcr.io/${{ github.repository }}:test
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Smoke test — gh
+        run: docker run --rm ghcr.io/${{ github.repository }}:test gh --version
+
+      - name: Smoke test — bw
+        run: docker run --rm ghcr.io/${{ github.repository }}:test bw --version
+
+      - name: Smoke test — himalaya
+        run: docker run --rm ghcr.io/${{ github.repository }}:test himalaya --version
+
+      - name: Smoke test — jq
+        run: docker run --rm ghcr.io/${{ github.repository }}:test jq --version
+
+      - name: Push image
+        uses: docker/build-push-action@v6
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:latest
+            ghcr.io/${{ github.repository }}:sha-${{ github.sha }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
