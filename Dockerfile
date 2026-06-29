@@ -36,3 +36,13 @@ RUN curl -fsSL "https://github.com/pimalaya/himalaya/releases/download/v${HIMALA
     && chmod +x /usr/local/bin/himalaya
 
 USER hermes
+
+# ── Hotfix: webhook template resolution ──────────────────────
+# Overlay patched webhook.py that adds fallback key resolution
+# for GitHub webhook payloads where repository.full_name may be
+# nested under pull_request.base.repo or pull_request.head.repo
+# instead of at the top level.
+# Remove this block once the upstream fix lands.
+USER root
+COPY webhook.py /opt/hermes/gateway/platforms/webhook.py
+USER hermes
