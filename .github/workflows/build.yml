@@ -37,16 +37,16 @@ jobs:
           cache-to: type=gha,mode=max
 
       - name: Smoke test — gh
-        run: docker run --rm ghcr.io/${{ github.repository }}:test gh --version
+        run: docker run --rm --entrypoint "" ghcr.io/${{ github.repository }}:test gh --version
 
       - name: Smoke test — bw
-        run: docker run --rm ghcr.io/${{ github.repository }}:test bw --version
+        run: docker run --rm --entrypoint "" ghcr.io/${{ github.repository }}:test bw --version
 
       - name: Smoke test — himalaya
-        run: docker run --rm ghcr.io/${{ github.repository }}:test himalaya --version
+        run: docker run --rm --entrypoint "" ghcr.io/${{ github.repository }}:test himalaya --version
 
       - name: Smoke test — jq
-        run: docker run --rm ghcr.io/${{ github.repository }}:test jq --version
+        run: docker run --rm --entrypoint "" ghcr.io/${{ github.repository }}:test jq --version
 
       - name: Push image
         uses: docker/build-push-action@v6
