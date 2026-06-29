@@ -32,21 +32,23 @@ jobs:
         with:
           context: .
           load: true
+          no-cache: true
           tags: ghcr.io/${{ github.repository }}:test
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+
+      - name: Inspect /usr/local/bin
+        run: docker run --rm --entrypoint /bin/ls ghcr.io/${{ github.repository }}:test -la /usr/local/bin/
 
       - name: Smoke test — gh
-        run: docker run --rm --entrypoint "" ghcr.io/${{ github.repository }}:test gh --version
+        run: docker run --rm --entrypoint /usr/local/bin/gh ghcr.io/${{ github.repository }}:test --version
 
       - name: Smoke test — bw
-        run: docker run --rm --entrypoint "" ghcr.io/${{ github.repository }}:test bw --version
+        run: docker run --rm --entrypoint /usr/local/bin/bw ghcr.io/${{ github.repository }}:test --version
 
       - name: Smoke test — himalaya
-        run: docker run --rm --entrypoint "" ghcr.io/${{ github.repository }}:test himalaya --version
+        run: docker run --rm --entrypoint /usr/local/bin/himalaya ghcr.io/${{ github.repository }}:test --version
 
       - name: Smoke test — jq
-        run: docker run --rm --entrypoint "" ghcr.io/${{ github.repository }}:test jq --version
+        run: docker run --rm --entrypoint /usr/bin/jq ghcr.io/${{ github.repository }}:test --version
 
       - name: Push image
         uses: docker/build-push-action@v6
@@ -56,5 +58,3 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}:latest
             ghcr.io/${{ github.repository }}:sha-${{ github.sha }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max

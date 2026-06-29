@@ -19,10 +19,15 @@ RUN curl -fsSL "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_$
     && rm -rf "/tmp/gh_${GH_VERSION}_linux_amd64"
 
 # Bitwarden CLI
-RUN curl -fsSL "https://github.com/bitwarden/clients/releases/download/cli-v${BW_VERSION}/bw-linux-${BW_VERSION}.zip" -o /tmp/bw.zip \
-    && python3 -c "import zipfile; zipfile.ZipFile('/tmp/bw.zip').extractall('/tmp/bw')" \
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends unzip \
+    && curl -fsSL "https://github.com/bitwarden/clients/releases/download/cli-v${BW_VERSION}/bw-linux-${BW_VERSION}.zip" -o /tmp/bw.zip \
+    && unzip -o /tmp/bw.zip -d /tmp/bw \
     && mv /tmp/bw/bw /usr/local/bin/ \
-    && rm -rf /tmp/bw /tmp/bw.zip
+    && rm -rf /tmp/bw /tmp/bw.zip \
+    && apt-get purge -y unzip \
+    && apt-get autoremove -y \
+    && rm -rf /var/lib/apt/lists/*
 
 # Himalaya — extract from .tgz archive
 RUN curl -fsSL "https://github.com/pimalaya/himalaya/releases/download/v${HIMALAYA_VERSION}/himalaya.x86_64-linux.tgz" \
