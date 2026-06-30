@@ -50,6 +50,9 @@ jobs:
       - name: Smoke test — jq
         run: docker run --rm --entrypoint /usr/bin/jq ghcr.io/${{ github.repository }}:test --version
 
+      - name: Smoke test — kubectl
+        run: docker run --rm --entrypoint /usr/local/bin/kubectl ghcr.io/${{ github.repository }}:test version --client
+
       - name: Push image
         uses: docker/build-push-action@v6
         with:

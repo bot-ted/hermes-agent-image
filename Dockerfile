@@ -4,6 +4,7 @@ FROM nousresearch/hermes-agent:latest
 ARG GH_VERSION=2.63.0
 ARG BW_VERSION=2025.1.0
 ARG HIMALAYA_VERSION=1.2.0
+ARG KUBECTL_VERSION=1.32.0
 
 USER root
 
@@ -34,6 +35,11 @@ RUN curl -fsSL "https://github.com/pimalaya/himalaya/releases/download/v${HIMALA
     | tar xz -C /tmp \
     && mv /tmp/himalaya /usr/local/bin/ \
     && chmod +x /usr/local/bin/himalaya
+
+# kubectl — static binary from upstream
+RUN curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl" \
+    -o /usr/local/bin/kubectl \
+    && chmod +x /usr/local/bin/kubectl
 
 USER hermes
 
