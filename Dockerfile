@@ -8,9 +8,9 @@ ARG KUBECTL_VERSION=1.32.0
 
 USER root
 
-# jq — tiny JSON processor, install via apt
+# jq + sshpass — tiny CLI tools, install via apt
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends jq \
+    && apt-get install -y --no-install-recommends jq sshpass \
     && rm -rf /var/lib/apt/lists/*
 
 # GitHub CLI

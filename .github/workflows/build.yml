@@ -53,6 +53,9 @@ jobs:
       - name: Smoke test — kubectl
         run: docker run --rm --entrypoint /usr/local/bin/kubectl ghcr.io/${{ github.repository }}:test version --client
 
+      - name: Smoke test — sshpass
+        run: docker run --rm --entrypoint /usr/bin/sshpass ghcr.io/${{ github.repository }}:test -V
+
       - name: Push image
         uses: docker/build-push-action@v6
         with:
