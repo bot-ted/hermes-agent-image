@@ -52,13 +52,3 @@ USER hermes
 USER root
 COPY webhook.py /opt/hermes/gateway/platforms/webhook.py
 USER hermes
-
-# ── Callback server ──────────────────────────────────────────
-# Catches OAuth redirects and other webhooks at cb.box.shahmeer.sh
-USER root
-RUN mkdir -p /opt/callback
-COPY callback_server.py /opt/callback/callback_server.py
-COPY docker-entrypoint.sh /docker-entrypoint.sh
-RUN chmod +x /docker-entrypoint.sh
-USER hermes
-ENTRYPOINT ["/docker-entrypoint.sh"]
