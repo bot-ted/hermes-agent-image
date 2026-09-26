@@ -10,6 +10,9 @@ Derived [Hermes Agent](https://github.com/NousResearch/hermes-agent) Docker imag
 | `bw` | 2025.1.0 | Bitwarden CLI — secret/credential management |
 | `himalaya` | 1.2.0 | Email CLI — send, read, search |
 | `jq` | (apt) | JSON processor for shell pipelines |
+| `kubectl` | 1.32.0 | Kubernetes CLI — cluster inspection |
+| `sshpass` | (apt) | Non-interactive SSH password auth |
+| `link-cli` | 0.23.0 | Stripe Link CLI — agent payments via Link wallet |
 
 All versions are pinned via `ARG` directives in the Dockerfile for reproducible builds.
 
@@ -41,7 +44,7 @@ Builds on:
 - Push to `main` (Dockerfile changes)
 - Nightly at 8 PM EST (`0 1 * * *` UTC) — picks up new upstream base image
 
-Pipeline: **Build → smoke test (all 4 tools must report versions) → push `:latest` + `:sha-<commit>`**
+Pipeline: **Build → smoke test (every tool must report its version) → push `:latest` + `:sha-<commit>`**
 
 ## Updating Tool Versions
 
