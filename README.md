@@ -8,7 +8,7 @@ Derived [Hermes Agent](https://github.com/NousResearch/hermes-agent) Docker imag
 |------|---------|---------|
 | `gh` | 2.63.0 | GitHub CLI — PRs, issues, repos, auth |
 | `bw` | 2025.1.0 | Bitwarden CLI — secret/credential management |
-| `himalaya` | 1.2.0 | Email CLI — send, read, search |
+| `himalaya` | 2.1.0 | Email CLI — send, read, search |
 | `jq` | (apt) | JSON processor for shell pipelines |
 | `kubectl` | 1.32.0 | Kubernetes CLI — cluster inspection |
 | `sshpass` | (apt) | Non-interactive SSH password auth |
