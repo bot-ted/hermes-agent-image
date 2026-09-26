@@ -3,7 +3,7 @@ FROM nousresearch/hermes-agent:latest
 # Tool versions (bump these ARGs to update)
 ARG GH_VERSION=2.63.0
 ARG BW_VERSION=2025.1.0
-ARG HIMALAYA_VERSION=1.2.0
+ARG HIMALAYA_VERSION=2.1.0
 ARG KUBECTL_VERSION=1.32.0
 ARG LINK_CLI_VERSION=0.23.0
 
