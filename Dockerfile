@@ -6,6 +6,7 @@ ARG BW_VERSION=2025.1.0
 ARG HIMALAYA_VERSION=2.1.0
 ARG KUBECTL_VERSION=1.32.0
 ARG LINK_CLI_VERSION=0.23.0
+ARG UCP_CLI_VERSION=0.9.0
 
 USER root
 
@@ -45,6 +46,10 @@ RUN curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/amd64/ku
 # link-cli — Stripe Link CLI for agent payments (npm, version-pinned)
 RUN npm install -g "@stripe/link-cli@${LINK_CLI_VERSION}" \
     && link-cli --version
+
+# ucp-cli — Shopify UCP CLI for agentic commerce (npm, version-pinned)
+RUN npm install -g "@shopify/ucp-cli@${UCP_CLI_VERSION}" \
+    && ucp --version
 
 USER hermes
 

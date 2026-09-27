@@ -59,6 +59,9 @@ jobs:
       - name: Smoke test — link-cli
         run: docker run --rm --entrypoint /usr/local/bin/link-cli ghcr.io/${{ github.repository }}:test --version
 
+      - name: Smoke test — ucp-cli
+        run: docker run --rm --entrypoint /usr/local/bin/ucp ghcr.io/${{ github.repository }}:test --version
+
       - name: Push image
         uses: docker/build-push-action@v6
         with:
