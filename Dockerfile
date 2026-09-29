@@ -8,6 +8,10 @@ ARG KUBECTL_VERSION=1.32.0
 ARG LINK_CLI_VERSION=0.23.0
 ARG UCP_CLI_VERSION=0.9.0
 ARG NTN_VERSION=0.23.11
+ARG FASTER_WHISPER_VERSION=1.2.1
+ARG PYNACL_VERSION=1.6.2
+
+ENV HF_HUB_CACHE=/opt/hf-cache
 
 USER root
 
@@ -55,6 +59,15 @@ RUN npm install -g "@shopify/ucp-cli@${UCP_CLI_VERSION}" \
 # ntn — Notion CLI for pages, databases, markdown, Workers (npm, version-pinned)
 RUN npm install -g "ntn@${NTN_VERSION}" \
     && ntn --version
+
+# Voice deps — local STT (faster-whisper) + Discord voice encryption (PyNaCl),
+# installed into the gateway venv (system python has no pip and is not the runtime).
+# Whisper base model is pre-downloaded so first transcription is instant.
+RUN uv pip install --python /opt/hermes/.venv/bin/python --no-cache \
+        "faster-whisper==${FASTER_WHISPER_VERSION}" "PyNaCl==${PYNACL_VERSION}" \
+    && /opt/hermes/.venv/bin/python -c "import faster_whisper, nacl; print('voice deps OK')" \
+    && /opt/hermes/.venv/bin/python -c "from faster_whisper import WhisperModel; WhisperModel('base', device='cpu', compute_type='int8'); print('whisper base cached')" \
+    && chmod -R a+rX /opt/hf-cache
 
 USER hermes
 

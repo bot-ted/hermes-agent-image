@@ -65,6 +65,12 @@ jobs:
       - name: Smoke test — ntn
         run: docker run --rm --entrypoint /usr/local/bin/ntn ghcr.io/${{ github.repository }}:test --version
 
+      - name: Smoke test — voice deps
+        run: docker run --rm --entrypoint /opt/hermes/.venv/bin/python ghcr.io/${{ github.repository }}:test -c "import faster_whisper, nacl; print('voice OK')"
+
+      - name: Smoke test — whisper model cached
+        run: docker run --rm --entrypoint /bin/ls ghcr.io/${{ github.repository }}:test -la /opt/hf-cache/
+
       - name: Push image
         uses: docker/build-push-action@v6
         with:
