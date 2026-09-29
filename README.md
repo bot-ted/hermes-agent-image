@@ -14,6 +14,7 @@ Derived [Hermes Agent](https://github.com/NousResearch/hermes-agent) Docker imag
 | `sshpass` | (apt) | Non-interactive SSH password auth |
 | `link-cli` | 0.23.0 | Stripe Link CLI — agent payments via Link wallet |
 | `ucp` | 0.9.0 | Shopify UCP CLI — agentic commerce (catalog, cart, checkout) |
+| `ntn` | 0.23.11 | Notion CLI — pages, databases, markdown, Workers |
 
 All versions are pinned via `ARG` directives in the Dockerfile for reproducible builds.
 

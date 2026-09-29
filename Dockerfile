@@ -7,6 +7,7 @@ ARG HIMALAYA_VERSION=2.1.0
 ARG KUBECTL_VERSION=1.32.0
 ARG LINK_CLI_VERSION=0.23.0
 ARG UCP_CLI_VERSION=0.9.0
+ARG NTN_VERSION=0.23.11
 
 USER root
 
@@ -50,6 +51,10 @@ RUN npm install -g "@stripe/link-cli@${LINK_CLI_VERSION}" \
 # ucp-cli — Shopify UCP CLI for agentic commerce (npm, version-pinned)
 RUN npm install -g "@shopify/ucp-cli@${UCP_CLI_VERSION}" \
     && ucp --version
+
+# ntn — Notion CLI for pages, databases, markdown, Workers (npm, version-pinned)
+RUN npm install -g "ntn@${NTN_VERSION}" \
+    && ntn --version
 
 USER hermes
 
