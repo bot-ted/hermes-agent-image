@@ -15,6 +15,8 @@ Derived [Hermes Agent](https://github.com/NousResearch/hermes-agent) Docker imag
 | `link-cli` | 0.23.0 | Stripe Link CLI — agent payments via Link wallet |
 | `ucp` | 0.9.0 | Shopify UCP CLI — agentic commerce (catalog, cart, checkout) |
 | `ntn` | 0.23.11 | Notion CLI — pages, databases, markdown, Workers |
+| `faster-whisper` | 1.2.1 | Local speech-to-text (base model pre-cached in-image) |
+| `PyNaCl` | 1.6.2 | Voice encryption for Discord voice channels |
 
 All versions are pinned via `ARG` directives in the Dockerfile for reproducible builds.
 
